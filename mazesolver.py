@@ -21,10 +21,10 @@ def find_possible_moves( i , j , M ):
     
     n,m = M.shape
     
-    if ( (i-1 >= 0) & (M[i-1,j] == 0) ): moves.append( [ i-1 , j   ] )
-    if ( (i+1 <  n) & (M[i+1,j] == 0) ): moves.append( [ i+1 , j   ] )
-    if ( (j-1 >= 0) & (M[i,j-1] == 0) ): moves.append( [ i   , j-1 ] )
-    if ( (j+1 <  m) & (M[i,j+1] == 0) ): moves.append( [ i   , j+1 ] )
+    if ( (i-1 >= 0) & (M[np.maximum(i-1,0),j] == 0) ):   moves.append( [ i-1 , j   ] )
+    if ( (i+1 <  n) & (M[np.minimum(i+1,n-1),j] == 0) ): moves.append( [ i+1 , j   ] )
+    if ( (j-1 >= 0) & (M[i,np.maximum(j-1,0)] == 0) ):   moves.append( [ i   , j-1 ] )
+    if ( (j+1 <  m) & (M[i,np.minimum(j+1,n-1)] == 0) ): moves.append( [ i   , j+1 ] )
     
     return moves
 
@@ -46,7 +46,6 @@ def find_maze_nodes( M , i0 , j0 ):
         if len(moves_ij) > 1:
             nodes.append( [i,j] )
             last_ij = [i,j]
-            i = 
         
         elif len(moves_ij) == 0: break
         
