@@ -63,6 +63,7 @@ def find_possible_moves( i , j , M ):
     
     n,m = M.shape
     
+<<<<<<< HEAD
     if ( i-1 >= 0 ):
         if ( M[i-1,j] == 0 ):
             moves.append( [ i-1 , j   ] )
@@ -78,6 +79,12 @@ def find_possible_moves( i , j , M ):
     if ( j+1 <  m ):
         if ( M[i,j+1] == 0 ):
             moves.append( [ i   , j+1 ] )
+=======
+    if ( (i-1 >= 0) & (M[np.maximum(i-1,0),j] == 0) ):   moves.append( [ i-1 , j   ] )
+    if ( (i+1 <  n) & (M[np.minimum(i+1,n-1),j] == 0) ): moves.append( [ i+1 , j   ] )
+    if ( (j-1 >= 0) & (M[i,np.maximum(j-1,0)] == 0) ):   moves.append( [ i   , j-1 ] )
+    if ( (j+1 <  m) & (M[i,np.minimum(j+1,n-1)] == 0) ): moves.append( [ i   , j+1 ] )
+>>>>>>> c5134b3dae203c2a1cc9185cecbb465e0e09587d
     
     return moves
 
@@ -99,7 +106,16 @@ def check_if_i0j0_is_maze_node( M , i0 , j0 , last_ij ):
         moves_ij = [ mi for mi in moves_ij if ( mi != last_ij ) ]
         
         if len(moves_ij) > 1:
+<<<<<<< HEAD
             return True
+=======
+            nodes.append( [i,j] )
+            last_ij = [i,j]
+        
+        elif len(moves_ij) == 0: break
+        
+    return nodes
+>>>>>>> c5134b3dae203c2a1cc9185cecbb465e0e09587d
         
         else:
             return False
