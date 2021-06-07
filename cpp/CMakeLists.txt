@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 2.6)
 project(mazesolver)
 
-include(ExternalProject)
+find_package(GTest REQUIRED)
+find_package(Eigen3 REQUIRED)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -16,8 +17,15 @@ MESSAGE( STATUS "C++ compiler ID: ${CMAKE_CXX_COMPILER_ID}" )
 MESSAGE( STATUS "C++ compiler version: ${CMAKE_CXX_COMPILER_VERSION}" )
 MESSAGE( STATUS "C++ compiler string: ${CXX_COMPILER_STRING}" )
 
+include_directories( ${CMAKE_SOURCE_DIR}
+                     ${GTEST_INCLUDE_DIRS}
+                     ${EIGEN3_INCLUDE_DIR}
+		     )
+
 add_executable( mazesolver
-  mazesolver.cpp
+  driver.cpp
+  Node.cpp
+  utils.cpp
 )
 
 #add_dependencies(mazesolver petsc_external)

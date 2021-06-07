@@ -17,7 +17,7 @@ class Node {
 
   int i_ , j_;
   std::vector<int> last_ij_;
-  std::vector<int> next_index_;
+  int next_index_;
   std::vector< std::vector<int> > valid_next_moves_;
   
 };
