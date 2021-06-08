@@ -26,12 +26,21 @@ add_executable( mazesolver
   driver.cpp
   Node.cpp
   utils.cpp
-)
-
-#add_dependencies(mazesolver petsc_external)
+  )
 
 target_link_libraries( mazesolver
   m
-#  ${MPI_LIBRARIES}
-#  ${PETSC_LIBRARIES}
+)
+
+
+add_executable( unittests
+  tests/tests.cpp
+  tests/utils_test.cpp
+  utils.cpp
+)
+
+target_link_libraries( unittests
+  ${GTEST_LIBRARIES}
+  /usr/lib/libgtest.a
+  pthread
 )
