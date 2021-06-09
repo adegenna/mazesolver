@@ -36,7 +36,9 @@ target_link_libraries( mazesolver
 add_executable( unittests
   tests/tests.cpp
   tests/utils_test.cpp
+  tests/node_test.cpp
   utils.cpp
+  Node.cpp
 )
 
 target_link_libraries( unittests
