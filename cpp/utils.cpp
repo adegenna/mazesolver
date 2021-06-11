@@ -61,3 +61,39 @@ vector< vector<int> > find_exit_points_of_maze( const MatrixXi& M ) {
   return exits;
   
 }
+
+
+bool check_if_ij_is_maze_node( const MatrixXi& M ,
+			       const int i , const int j ,
+			       const vector<int> last_ij ) {
+  
+  // Boundary
+  
+  if ( (i==0) || (i==M.rows()-1) | (j==0) | (j==M.cols()-1) ) {
+    
+    if ( M(i,j) == 0 )
+      return true;
+    else
+      return false;
+    
+  }
+  
+  // Interior
+
+  else {
+    
+    vector<vector<int>> moves_ij = find_possible_moves( i , j , M );
+    vector<vector<int>> moves_ij_nolast( moves_ij.size() );
+    
+    auto it = copy_if ( moves_ij.begin(), moves_ij.end(), moves_ij_nolast.begin(),
+			[last_ij](vector<int> mi){ return !( mi == last_ij ); } );
+    moves_ij_nolast.resize( distance( moves_ij_nolast.begin() , it ) );
+    
+    if ( moves_ij_nolast.size() > 1 )
+      return true;
+    else
+      return false;
+    
+  }
+  
+}
