@@ -16,3 +16,15 @@ TEST_F(UtilsTest, findmoves) {
   ASSERT_TRUE( find( moves.begin() , moves.end() , move2 ) != moves.end() );
   
 }
+
+TEST_F( UtilsTest , findexits ) {
+  
+  vector<vector<int>> exits = find_exit_points_of_maze( M_ );
+  
+  vector<int> exit1 = { 0 , 2 };
+  vector<int> exit2 = { 3 , 1 };
+  
+  ASSERT_TRUE( find( exits.begin() , exits.end() , exit1 ) != exits.end() );
+  ASSERT_TRUE( find( exits.begin() , exits.end() , exit2 ) != exits.end() );
+  
+}

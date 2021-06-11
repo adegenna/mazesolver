@@ -13,10 +13,10 @@ class UtilsTest: public ::testing::Test {
     
     M_.resize(4,4);
     
-    M_ << 1 , 1 , 1 , 1 ,
+    M_ << 1 , 1 , 0 , 1 ,
           1 , 1 , 0 , 1 ,
           1 , 0 , 0 , 1 ,
-          1 , 1 , 1 , 1 ;
+          1 , 0 , 1 , 1 ;
   }
   
   Eigen::MatrixXi M_;
