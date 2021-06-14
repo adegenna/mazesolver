@@ -28,3 +28,9 @@ TEST_F( UtilsTest , findexits ) {
   ASSERT_TRUE( find( exits.begin() , exits.end() , exit2 ) != exits.end() );
   
 }
+
+TEST_F( UtilsTest , checkifnode ) {
+  
+  ASSERT_TRUE( check_if_ij_is_maze_node( M_ , 2 , 2 , { 1 , 2 } ) );
+
+}

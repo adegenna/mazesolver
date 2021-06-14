@@ -11,12 +11,12 @@ class UtilsTest: public ::testing::Test {
   
   virtual void SetUp() {
     
-    M_.resize(4,4);
+    M_.resize(4,5);
     
-    M_ << 1 , 1 , 0 , 1 ,
-          1 , 1 , 0 , 1 ,
-          1 , 0 , 0 , 1 ,
-          1 , 0 , 1 , 1 ;
+    M_ << 1 , 1 , 0 , 1 , 1 ,
+          1 , 1 , 0 , 1 , 1 ,
+          1 , 0 , 0 , 0 , 1 ,
+          1 , 0 , 1 , 1 , 1 ;
   }
   
   Eigen::MatrixXi M_;

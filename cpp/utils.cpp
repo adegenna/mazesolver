@@ -38,7 +38,7 @@ vector< vector<int> > find_exit_points_of_maze( const MatrixXi& M ) {
   
   vector<vector<int>> exits;
   
-  for (int i=0; i<M.rows(); i++) {
+  for (int i=0; i<M.cols(); i++) {
     
     if ( M(0,i) == 0 )
       exits.push_back( {0,i} );
@@ -48,7 +48,7 @@ vector< vector<int> > find_exit_points_of_maze( const MatrixXi& M ) {
     
   }
   
-  for (int i=0; i<M.cols(); i++) {
+  for (int i=0; i<M.rows(); i++) {
     
     if ( M(i,0) == 0 )
       exits.push_back( {i,0} );
@@ -97,3 +97,5 @@ bool check_if_ij_is_maze_node( const MatrixXi& M ,
   }
   
 }
+
+
