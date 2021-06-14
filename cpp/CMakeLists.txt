@@ -27,6 +27,7 @@ add_executable( mazesolver
   Node.cpp
   utils.cpp
   search.cpp
+  examplemaze.cpp
   )
 
 target_link_libraries( mazesolver
