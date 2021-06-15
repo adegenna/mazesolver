@@ -22,14 +22,14 @@ void depth_first_solve( const MatrixXi& M ,
   auto ij = first_move;
   auto last_ij = ij_0;
   
-  soln_IJ.clear();
+  soln_IJ.resize(1);
   soln_IJ[0].push_back( last_ij );
   soln_IJ.resize( soln_IJ.size() + 1 );
   
   while ( ij != ij_f ) {
     
     soln_IJ[soln_IJ.size()-1].push_back( ij );
-
+    
     if ( check_if_ij_is_maze_node( M , ij[0] , ij[1] , last_ij ) ) {
       
       soln_nodes.push_back( Node( ij[0] , ij[1] , last_ij ) );
@@ -38,7 +38,7 @@ void depth_first_solve( const MatrixXi& M ,
 		  soln_nodes[soln_nodes.size()-1].get_j() };
       ij      = soln_nodes[soln_nodes.size()-1].calculate_valid_next_move( M );
       
-      soln_IJ.resize( soln_IJ.size() );
+      soln_IJ.resize( soln_IJ.size()+1 );
       
     }
     
@@ -63,7 +63,7 @@ void depth_first_solve( const MatrixXi& M ,
 	
 	soln_nodes[soln_nodes.size()-1].increment_next_index();
 	soln_IJ.pop_back();
-	soln_IJ.resize( soln_IJ.size() );
+	soln_IJ.resize( soln_IJ.size()+1 );
 	
 	while( true ) {
 	  
@@ -75,7 +75,7 @@ void depth_first_solve( const MatrixXi& M ,
 	    soln_IJ.pop_back();
 	    
 	    soln_IJ.pop_back();
-	    soln_IJ.resize( soln_IJ.size() );
+	    soln_IJ.resize( soln_IJ.size()+1 );
 	    
 	  }
 	  

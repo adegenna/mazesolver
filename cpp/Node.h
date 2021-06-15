@@ -10,6 +10,7 @@ class Node {
 
   Node( const int i , const int j );
   Node( const int i , const int j , std::vector<int>& last_ij );
+  Node();
   ~Node( );
   std::vector<int> calculate_valid_next_move( const Eigen::MatrixXi& M );
   int get_i() { return i_; };

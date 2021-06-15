@@ -22,6 +22,12 @@ Node::Node( const int i , const int j , vector<int>& last_ij )
   next_index_ = 0;
 }
 
+Node::Node( ) {
+  i_ = -1; j_ = -1;
+  last_ij_    = {-1,-1};
+  next_index_ = 0;
+}
+
 Node::~Node( ) {
 
 }

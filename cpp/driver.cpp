@@ -7,7 +7,6 @@
 #include <random>
 #include <cmath>
 #include <Eigen/Dense>
-//#include <boost/program_options.hpp>
 #include "utils.h"
 #include "Node.h"
 #include "search.h"
@@ -18,8 +17,8 @@ using namespace Eigen;
 
 int main(int argc, char* argv[]) {
   
-  printf("*********** DRIVER PROGRAM FOR MAZE SOLVER ***********\n\n");
-
+  cout << "*********** DRIVER PROGRAM FOR MAZE SOLVER ***********\n\n";
+  
   MatrixXi M = make_maze_32x32();
   
   vector<vector<int>> exits = find_exit_points_of_maze( M );
@@ -27,14 +26,24 @@ int main(int argc, char* argv[]) {
   vector<int> ij_0 = exits[0];
   vector<int> ij_f = exits[1];
   
+  cout << "maze size: " << M.rows() << "x" << M.cols() << endl;
+  
+  cout << "entrance: (";
+  cout << ij_0[0] << "," << ij_0[1];
+  cout << ")" << endl;
+  
+  cout << "exit: (";
+  cout << ij_f[0] << "," << ij_f[1];
+  cout << ")" << endl;
+  
   vector<Node> soln_nodes;
   vector<vector<vector<int>>> soln_IJ;
   
-  depth_first_solve( M ,
-		     ij_0 , ij_f ,
-		     soln_nodes , soln_IJ );
+  depth_first_solve( M , ij_0 , ij_f , soln_nodes , soln_IJ );
   
-  
+  cout << "computed nodal solution:" << endl;
+  for ( int i=0; i<soln_nodes.size(); i++ )
+    cout << "( " << soln_nodes[i].get_i() << " , " << soln_nodes[i].get_j() << " )" << endl; 
   
   return 0;
 }
