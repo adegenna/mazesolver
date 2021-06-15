@@ -1,6 +1,5 @@
 #include "Node.h"
 #include "utils.h"
-#include <iterator>
 
 using namespace std;
 using namespace Eigen;
@@ -11,7 +10,7 @@ Node::Node( const int i , const int j )
 {
 }
 
-Node::Node( const int i , const int j , vector<int>& last_ij )
+Node::Node( const int i , const int j , const vector<int>& last_ij )
   : i_(i) , j_(j) , last_ij_(last_ij), next_index_(0)
 {
 }
