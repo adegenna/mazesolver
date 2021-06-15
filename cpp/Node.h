@@ -13,15 +13,15 @@ class Node {
   Node();
   ~Node( );
   std::vector<int> calculate_valid_next_move( const Eigen::MatrixXi& M );
-  int get_i() { return i_; };
-  int get_j() { return j_; };
+  int get_i() const { return i_; };
+  int get_j() const { return j_; };
   void increment_next_index( ) { next_index_ += 1; };
   int get_next_index() { return next_index_; };
   std::vector<std::vector<int>> get_valid_next_moves() { return valid_next_moves_; };
   
  private:
 
-  int i_ , j_;
+  const int i_ , j_;
   std::vector<int> last_ij_;
   int next_index_;
   std::vector< std::vector<int> > valid_next_moves_;
