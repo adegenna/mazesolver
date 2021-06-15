@@ -39,6 +39,9 @@ add_executable( unittests
   tests/tests.cpp
   tests/utils_test.cpp
   tests/node_test.cpp
+  tests/search_test.cpp
+  search.cpp
+  examplemaze.cpp
   utils.cpp
   Node.cpp
 )
