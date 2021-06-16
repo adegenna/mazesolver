@@ -4,6 +4,8 @@ project(mazesolver)
 find_package(GTest REQUIRED)
 find_package(Eigen3 REQUIRED)
 
+enable_testing()
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -50,4 +52,17 @@ target_link_libraries( unittests
   ${GTEST_LIBRARIES}
   /usr/lib/libgtest.a
   pthread
+)
+
+enable_testing()
+
+set_target_properties( unittests PROPERTIES
+  RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+)
+
+add_test(
+  NAME
+  unittests
+  COMMAND
+  unittests
 )
