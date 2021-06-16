@@ -1,4 +1,4 @@
-name: CPP: unit testing
+name: unit testing (C++)
 
 on:
   push:
