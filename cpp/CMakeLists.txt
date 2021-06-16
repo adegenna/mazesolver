@@ -50,7 +50,7 @@ add_executable( unittests
 
 target_link_libraries( unittests
   ${GTEST_LIBRARIES}
-  /usr/lib/libgtest.a
+  #/usr/lib/libgtest.a
   pthread
 )
 
