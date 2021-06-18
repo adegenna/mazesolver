@@ -155,6 +155,35 @@ def depth_first_solve( M , ij_0 , ij_f ):
     return maze_nodes , IJ , IJ_all
 
 
+def make_movie_of_maze_solve( M , IJ_all , entrance_ij , exit_ij , fig ):
+    
+    ax = fig.gca()
+    
+    ax.set_xticks([])
+    ax.set_yticks([])
+        
+    frames = []
+    
+    for i in range( len(IJ_all) ):
+
+        M_node = M.copy()
+
+        for ij_set in IJ_all[i]:
+            for ij in ij_set:
+                M_node[ ij[0] , ij[1] ] = 2
+        
+        frames.append( [ ax.imshow( M_node , vmin=0 , vmax=3 , cmap='afmhot') ] )
+    
+    for i in range(10):
+        M_node[ exit_ij[0] , exit_ij[1] ] = 2
+        frames.append( [ ax.imshow( M_node , vmin=0 , vmax=3 , cmap='afmhot') ] )
+    
+    ani = animation.ArtistAnimation(fig, frames, interval=50, blit=True,
+                                repeat_delay=1000)
+    ani.save('movie.mp4')
+
+
+
 def main( M ):
     
     exits = find_exit_points_of_maze( M )
@@ -169,43 +198,10 @@ def main( M ):
         print( [n.i , n.j] )
     print( exit_ij )
     print('')
-    
-    M_node = M.copy()
-    
-    for ij_set in IJ:
-        for ij in ij_set:
-            M_node[ ij[0] , ij[1] ] = 2
-    
-    for n in maze_nodes:
-        M_node[ n.i , n.j ] = 3
-    M_node[ exit_ij[0] , exit_ij[1] ] = 3
-    
+        
     fig = plt.figure()
-    plt.gca().set_xticks([])
-    plt.gca().set_yticks([])
-        
-    frames = []
     
-    for i in range( len(IJ_all) ):
-
-        M_node = M.copy()
-
-        for ij_set in IJ_all[i]:
-            for ij in ij_set:
-                M_node[ ij[0] , ij[1] ] = 2
-
-        for n in maze_nodes:
-            M_node[ n.i , n.j ] = 3
-        M_node[ exit_ij[0] , exit_ij[1] ] = 3
-        
-        frames.append( [ plt.imshow( M_node , vmin=0 , vmax=3 , cmap='afmhot') ] )
-    
-    for i in range(10):
-        frames.append( [ plt.imshow( M_node , vmin=0 , vmax=3 , cmap='afmhot') ] )
-    
-    ani = animation.ArtistAnimation(fig, frames, interval=50, blit=True,
-                                repeat_delay=1000)
-    ani.save('movie.mp4')
+    make_movie_of_maze_solve( M , IJ_all , entrance_ij , exit_ij , fig )
     
     plt.show()
     
