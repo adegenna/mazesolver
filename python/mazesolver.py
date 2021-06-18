@@ -100,10 +100,14 @@ def depth_first_solve( M , ij_0 , ij_f ):
     IJ = []
     IJ.append( [last_ij] )
     IJ.append( [] )
+
+    IJ_all = []
+    IJ_all.append( IJ.copy() )
     
     while( np.all(ij != ij_f) ):
         
         IJ[-1].append(ij)
+        IJ_all.append( IJ.copy() )
         
         if ( check_if_i0j0_is_maze_node( M , ij[0] , ij[1] , last_ij ) == True ):
                             
@@ -135,7 +139,7 @@ def depth_first_solve( M , ij_0 , ij_f ):
                     if ( maze_nodes[-1].nxt_index >= len(maze_nodes[-1].valid_nxt_moves) ):
                         maze_nodes = maze_nodes[0:-1]
                         maze_nodes[-1].nxt_index += 1
-                        IJ = IJ[0:-2]
+                        IJ = IJ[0:-2]                        
                         IJ.append([])
                     else:
                         break
@@ -148,7 +152,7 @@ def depth_first_solve( M , ij_0 , ij_f ):
                 print( 'error' )
                 break
     
-    return maze_nodes , IJ 
+    return maze_nodes , IJ , IJ_all
 
 
 def main( M ):
@@ -158,8 +162,8 @@ def main( M ):
     entrance_ij = exits[0]
     exit_ij     = exits[1]
     
-    maze_nodes , IJ = depth_first_solve( M , entrance_ij , exit_ij )
-        
+    maze_nodes , IJ , IJ_all = depth_first_solve( M , entrance_ij , exit_ij )
+    
     print( 'COMPUTED NODAL PATH: ' )
     for n in maze_nodes:
         print( [n.i , n.j] )
@@ -179,6 +183,32 @@ def main( M ):
     plt.figure(1)
     plt.imshow( M_node , vmin=0 , vmax=3 )
     plt.show()
+    
+    plt.figure()
+    plt.ion()
+    
+    while( True ):
+        
+        for i in range( len(IJ_all) ):
+
+            print( IJ_all[i] )
+            M_node = M.copy()
+
+            for ij_set in IJ_all[i]:
+                for ij in ij_set:
+                    M_node[ ij[0] , ij[1] ] = 2
+
+            for n in maze_nodes:
+                M_node[ n.i , n.j ] = 3
+            M_node[ exit_ij[0] , exit_ij[1] ] = 3
+
+            plt.imshow( M_node , vmin=0 , vmax=3 )
+            plt.title( i+1 )
+            plt.draw()
+            plt.pause(0.01)
+            plt.clf()
+        
+
     
 
     
