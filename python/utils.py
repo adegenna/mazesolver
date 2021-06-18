@@ -12,6 +12,7 @@ class Node( ):
         self.last_ij = last_ij
         self.nxt_index = 0
         self.valid_nxt_moves = None
+        self.visited_before = 0
         
     def calculate_valid_nxt_move( self , M ):
         
@@ -36,26 +37,26 @@ def find_exit_points_of_maze( M ):
     return exits
 
 
-def find_possible_moves( i , j , M ):
+def find_possible_moves( i , j , M , val_move=0 ):
     
     moves = []
     
     n,m = M.shape
     
     if ( i-1 >= 0 ):
-        if ( M[i-1,j] == 0 ):
+        if ( M[i-1,j] == val_move ):
             moves.append( [ i-1 , j   ] )
     
     if ( i+1 < n ):
-        if ( M[i+1,j] == 0 ):
+        if ( M[i+1,j] == val_move ):
             moves.append( [ i+1 , j   ] )
     
     if ( j-1 >= 0 ):
-        if ( M[i,j-1] == 0 ):
+        if ( M[i,j-1] == val_move ):
             moves.append( [ i   , j-1 ] )
     
     if ( j+1 <  m ):
-        if ( M[i,j+1] == 0 ):
+        if ( M[i,j+1] == val_move ):
             moves.append( [ i   , j+1 ] )
     
     return moves
