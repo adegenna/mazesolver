@@ -2,8 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import itertools
 from maze_examples import *
-
-
+import copy
+import matplotlib.animation as animation
+import matplotlib.cm as cm
 
 class Node( ):
     
@@ -100,15 +101,14 @@ def depth_first_solve( M , ij_0 , ij_f ):
     IJ = []
     IJ.append( [last_ij] )
     IJ.append( [] )
-
+    
     IJ_all = []
-    IJ_all.append( IJ.copy() )
     
     while( np.all(ij != ij_f) ):
         
         IJ[-1].append(ij)
-        IJ_all.append( IJ.copy() )
-        
+        IJ_all.append( copy.deepcopy( IJ ) )
+                
         if ( check_if_i0j0_is_maze_node( M , ij[0] , ij[1] , last_ij ) == True ):
                             
             maze_nodes.append( Node( ij[0] , ij[1] , last_ij ) )
@@ -180,35 +180,35 @@ def main( M ):
         M_node[ n.i , n.j ] = 3
     M_node[ exit_ij[0] , exit_ij[1] ] = 3
     
-    plt.figure(1)
-    plt.imshow( M_node , vmin=0 , vmax=3 )
+    fig = plt.figure()
+    plt.gca().set_xticks([])
+    plt.gca().set_yticks([])
+        
+    frames = []
+    
+    for i in range( len(IJ_all) ):
+
+        M_node = M.copy()
+
+        for ij_set in IJ_all[i]:
+            for ij in ij_set:
+                M_node[ ij[0] , ij[1] ] = 2
+
+        for n in maze_nodes:
+            M_node[ n.i , n.j ] = 3
+        M_node[ exit_ij[0] , exit_ij[1] ] = 3
+        
+        frames.append( [ plt.imshow( M_node , vmin=0 , vmax=3 , cmap='afmhot') ] )
+    
+    for i in range(10):
+        frames.append( [ plt.imshow( M_node , vmin=0 , vmax=3 , cmap='afmhot') ] )
+    
+    ani = animation.ArtistAnimation(fig, frames, interval=50, blit=True,
+                                repeat_delay=1000)
+    ani.save('movie.mp4')
+    
     plt.show()
     
-    plt.figure()
-    plt.ion()
-    
-    while( True ):
-        
-        for i in range( len(IJ_all) ):
-
-            print( IJ_all[i] )
-            M_node = M.copy()
-
-            for ij_set in IJ_all[i]:
-                for ij in ij_set:
-                    M_node[ ij[0] , ij[1] ] = 2
-
-            for n in maze_nodes:
-                M_node[ n.i , n.j ] = 3
-            M_node[ exit_ij[0] , exit_ij[1] ] = 3
-
-            plt.imshow( M_node , vmin=0 , vmax=3 )
-            plt.title( i+1 )
-            plt.draw()
-            plt.pause(0.01)
-            plt.clf()
-        
-
     
 
     
