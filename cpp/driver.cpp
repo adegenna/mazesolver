@@ -37,10 +37,15 @@ int main(int argc, char* argv[]) {
   cout << ")" << endl;
   
   auto [ soln_nodes , soln_IJ ]  = depth_first_solve( M , ij_0 , ij_f );
-  
-  cout << "computed nodal solution:" << endl;
-  for ( int i=0; i<soln_nodes.size(); i++ )
-    cout << "( " << soln_nodes[i].get_i() << " , " << soln_nodes[i].get_j() << " )" << endl; 
+    
+  ofstream outfile_ij( "soln_ij.csv" );
+  for ( int i=0; i<soln_IJ.size(); i++ ) {
+    for ( int j=0; j<soln_IJ[i].size(); j++ ) {
+      outfile_ij << soln_IJ[i][j][0] << "," << soln_IJ[i][j][1] << endl;
+    }
+  }
+  outfile_ij << ij_f[0] << "," << ij_f[1];
+  outfile_ij.close();
   
   return 0;
 }
