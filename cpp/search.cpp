@@ -6,11 +6,42 @@
 using namespace std;
 using namespace Eigen;
 
-void depth_first_solve( const MatrixXi& M ,
+void back_track( vector<Node>& stack_nodes ,
+		 vector<vector<vector<int>>>& list_IJ ) {
+  
+  stack_nodes[stack_nodes.size()-1].increment_next_index();
+  list_IJ.pop_back();
+  list_IJ.resize( list_IJ.size()+1 );
+  
+  while( true ) {
+    
+    if ( stack_nodes[stack_nodes.size()-1].get_next_index() >=
+	 (stack_nodes[stack_nodes.size()-1].get_valid_next_moves()).size() ) {
+      
+      stack_nodes.pop_back();
+      stack_nodes[stack_nodes.size()-1].increment_next_index();
+      list_IJ.pop_back();
+      
+      list_IJ.pop_back();
+      list_IJ.resize( list_IJ.size()+1 );
+      
+    }
+    
+    else
+      break;
+    
+  }
+  
+}
+
+
+tuple< vector<Node> , vector<vector<vector<int>>> > depth_first_solve(
+			const MatrixXi& M ,
 			const vector<int>& ij_0 ,
-			const vector<int>& ij_f ,
-			vector<Node>& soln_nodes ,
-			vector<vector<vector<int>>>& soln_IJ ) {
+			const vector<int>& ij_f ) {
+  
+  vector<Node> soln_nodes;
+  vector<vector<vector<int>>> soln_IJ;
   
   soln_nodes.clear();
   soln_nodes.push_back( Node( ij_0[0] , ij_0[1] ) );
@@ -61,28 +92,7 @@ void depth_first_solve( const MatrixXi& M ,
       
       else if ( moves.size() == 1 ) {    // dead end case...
 	
-	soln_nodes[soln_nodes.size()-1].increment_next_index();
-	soln_IJ.pop_back();
-	soln_IJ.resize( soln_IJ.size()+1 );
-	
-	while( true ) {
-	  
-	  if ( soln_nodes[soln_nodes.size()-1].get_next_index() >=
-	      (soln_nodes[soln_nodes.size()-1].get_valid_next_moves()).size() ) {
-	    
-	    soln_nodes.pop_back();
-	    soln_nodes[soln_nodes.size()-1].increment_next_index();
-	    soln_IJ.pop_back();
-	    
-	    soln_IJ.pop_back();
-	    soln_IJ.resize( soln_IJ.size()+1 );
-	    
-	  }
-	  
-	  else
-	    break;
-	  
-	}
+	back_track( soln_nodes , soln_IJ );
 	
 	last_ij = { soln_nodes[soln_nodes.size()-1].get_i() ,
 	            soln_nodes[soln_nodes.size()-1].get_j() };
@@ -101,6 +111,6 @@ void depth_first_solve( const MatrixXi& M ,
     
   }
 
-  return;
+  return make_tuple( soln_nodes , soln_IJ );
 
 }

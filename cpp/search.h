@@ -6,11 +6,13 @@
 
 class Node;
 
-void depth_first_solve( const Eigen::MatrixXi& M ,
+std::tuple< std::vector<Node> , std::vector<std::vector<std::vector<int>>> > depth_first_solve(
+			const Eigen::MatrixXi& M ,
 			const std::vector<int>& ij_0 ,
-			const std::vector<int>& ij_f ,
-			std::vector<Node>& soln_nodes ,
-			std::vector<std::vector<std::vector<int>>>& soln_IJ );
+			const std::vector<int>& ij_f );
+
+void back_track( std::vector<Node>& stack_nodes ,
+		 std::vector<std::vector<std::vector<int>>>& list_IJ );
 
 
 

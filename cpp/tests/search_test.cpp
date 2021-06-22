@@ -16,11 +16,8 @@ TEST_F( SearchTest , depth_first_search ) {
   
   vector<int> ij_0 = exits[0];
   vector<int> ij_f = exits[1];
-  
-  vector<Node> soln_nodes;
-  vector<vector<vector<int>>> soln_IJ;
-  
-  depth_first_solve( M , ij_0 , ij_f , soln_nodes , soln_IJ );
+    
+  auto [ soln_nodes , soln_IJ ] = depth_first_solve( M , ij_0 , ij_f );
 
   vector<vector<int>> soln_nodes_ij;
   

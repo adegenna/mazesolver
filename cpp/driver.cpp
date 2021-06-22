@@ -36,10 +36,7 @@ int main(int argc, char* argv[]) {
   cout << ij_f[0] << "," << ij_f[1];
   cout << ")" << endl;
   
-  vector<Node> soln_nodes;
-  vector<vector<vector<int>>> soln_IJ;
-  
-  depth_first_solve( M , ij_0 , ij_f , soln_nodes , soln_IJ );
+  auto [ soln_nodes , soln_IJ ]  = depth_first_solve( M , ij_0 , ij_f );
   
   cout << "computed nodal solution:" << endl;
   for ( int i=0; i<soln_nodes.size(); i++ )
