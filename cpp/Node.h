@@ -28,5 +28,7 @@ class Node {
   
 };
 
+std::vector< std::vector<int> > get_all_node_ij( const std::vector<Node>& stack_nodes );
+
 
 #endif

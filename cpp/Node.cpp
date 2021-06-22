@@ -45,3 +45,17 @@ vector<int> Node::calculate_valid_next_move( const MatrixXi& M ) {
   
 }
 
+
+vector< vector<int> > get_all_node_ij( const vector<Node>& stack_nodes ) {
+  
+  vector< vector<int> > IJ;
+  
+  for ( auto ni : stack_nodes ) {
+    
+    IJ.push_back( vector<int>( ni.get_i() , ni.get_j() ) );
+    
+  }
+  
+  return IJ;
+  
+}

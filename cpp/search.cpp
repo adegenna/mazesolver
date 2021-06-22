@@ -2,6 +2,7 @@
 #include "utils.h"
 #include "Node.h"
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 using namespace Eigen;
@@ -63,13 +64,28 @@ tuple< vector<Node> , vector<vector<vector<int>>> > depth_first_solve(
     
     if ( check_if_ij_is_maze_node( M , ij[0] , ij[1] , last_ij ) ) {
       
-      soln_nodes.push_back( Node( ij[0] , ij[1] , last_ij ) );
+      auto node_ij = get_all_node_ij( soln_nodes );
       
-      last_ij = { soln_nodes[soln_nodes.size()-1].get_i() ,
-		  soln_nodes[soln_nodes.size()-1].get_j() };
-      ij      = soln_nodes[soln_nodes.size()-1].calculate_valid_next_move( M );
-      
-      soln_IJ.resize( soln_IJ.size()+1 );
+      if( find( node_ij.begin() , node_ij.end() , ij ) != node_ij.end() ) { // you have been to this node before, so it's a loop...
+	
+	back_track( soln_nodes , soln_IJ );
+	
+	last_ij = { soln_nodes[soln_nodes.size()-1].get_i() ,
+	            soln_nodes[soln_nodes.size()-1].get_j() };
+	ij = soln_nodes[soln_nodes.size()-1].calculate_valid_next_move(M);
+	
+      }
+
+      else { // you haven't been to this node before...
+	
+	soln_nodes.push_back( Node( ij[0] , ij[1] , last_ij ) );
+	
+	last_ij = { soln_nodes[soln_nodes.size()-1].get_i() ,
+		    soln_nodes[soln_nodes.size()-1].get_j() };
+	ij      = soln_nodes[soln_nodes.size()-1].calculate_valid_next_move( M );
+	
+	soln_IJ.resize( soln_IJ.size()+1 );
+      }
       
     }
     
