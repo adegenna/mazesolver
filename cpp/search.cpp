@@ -7,8 +7,8 @@ using namespace std;
 using namespace Eigen;
 
 void depth_first_solve( const MatrixXi& M ,
-			const vector<int> ij_0 ,
-			const vector<int> ij_f ,
+			const vector<int>& ij_0 ,
+			const vector<int>& ij_f ,
 			vector<Node>& soln_nodes ,
 			vector<vector<vector<int>>>& soln_IJ ) {
   
