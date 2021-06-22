@@ -9,6 +9,27 @@ import matplotlib.cm as cm
 from utils import *
 
 
+def backtrack( stack_nodes , list_IJ ):
+    
+    stack_nodes[-1].nxt_index += 1
+    _ = list_IJ.pop()
+    list_IJ.append([])
+    
+    while(True):
+        
+        if ( stack_nodes[-1].nxt_index >= len(stack_nodes[-1].valid_nxt_moves) ):
+            _ = stack_nodes.pop()
+            stack_nodes[-1].nxt_index += 1
+            _ = list_IJ.pop()
+            _ = list_IJ.pop()
+            list_IJ.append([])
+        else:
+            break
+    
+    return stack_nodes , list_IJ
+
+
+
 def depth_first_solve( M , ij_0 , ij_f ):
     
     maze_nodes = []
@@ -33,13 +54,22 @@ def depth_first_solve( M , ij_0 , ij_f ):
         IJ_all.append( copy.deepcopy( IJ ) )
                 
         if ( check_if_i0j0_is_maze_node( M , ij[0] , ij[1] , last_ij ) == True ):
-                            
-            maze_nodes.append( Node( ij[0] , ij[1] , last_ij ) )
-            
-            last_ij = [ maze_nodes[-1].i , maze_nodes[-1].j ]
-            ij      = maze_nodes[-1].calculate_valid_nxt_move( M )
-            
-            IJ.append( [] )
+
+            if ( ij not in [ [mi.i , mi.j] for mi in maze_nodes ] ): # if you haven't been at this node before...
+                
+                maze_nodes.append( Node( ij[0] , ij[1] , last_ij ) )
+                
+                last_ij = [ maze_nodes[-1].i , maze_nodes[-1].j ]
+                ij      = maze_nodes[-1].calculate_valid_nxt_move( M )
+                
+                IJ.append( [] )
+
+            else: # you have been at this node before, so it's a loop...
+                
+                maze_nodes , IJ = backtrack( maze_nodes , IJ )
+                
+                last_ij = [ maze_nodes[-1].i , maze_nodes[-1].j ]
+                ij      = maze_nodes[-1].calculate_valid_nxt_move( M )
             
         else:
             
@@ -52,20 +82,8 @@ def depth_first_solve( M , ij_0 , ij_f ):
                 last_ij = ij_save
                 
             elif ( len(moves) == 1 ): # dead end case
-                                
-                maze_nodes[-1].nxt_index += 1
-                IJ = IJ[0:-1]
-                IJ.append([])
                 
-                while(True):
-                    
-                    if ( maze_nodes[-1].nxt_index >= len(maze_nodes[-1].valid_nxt_moves) ):
-                        maze_nodes = maze_nodes[0:-1]
-                        maze_nodes[-1].nxt_index += 1
-                        IJ = IJ[0:-2]                        
-                        IJ.append([])
-                    else:
-                        break
+                maze_nodes , IJ = backtrack( maze_nodes , IJ )
                 
                 last_ij = [ maze_nodes[-1].i , maze_nodes[-1].j ]
                 ij      = maze_nodes[-1].calculate_valid_nxt_move( M )
@@ -133,4 +151,4 @@ def main( M ):
     
 if __name__ == '__main__':
     
-    main( make_test_maze_6() )
+    main( make_test_maze_loops() )

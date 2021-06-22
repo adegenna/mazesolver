@@ -23,6 +23,10 @@ class Node( ):
             self.valid_nxt_moves = moves
         
         return self.valid_nxt_moves[ self.nxt_index ]
+
+    def is_at_ij( i , j ):
+        
+        return ( (i == self.i) & (j == self.j) )
         
 
 
