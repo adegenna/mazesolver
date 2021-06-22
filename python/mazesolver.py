@@ -159,7 +159,7 @@ def main( M ):
     maze_nodes , IJ , IJ_all = depth_first_solve( M , entrance_ij , exit_ij )
     
     fig = plt.figure()
-    print( 'solved path length: ' + str(np.shape(IJ)[0]) )
+    print( 'solved path length: ' + str( np.sum( [ len(IJ[i]) for i in range(len(IJ)) ] ) ) )
     print( 'iterations taken: '   + str(np.shape( IJ_all )) )
     
     #make_movie_of_maze_solve( -M+1 , IJ_all , entrance_ij , exit_ij , fig )
