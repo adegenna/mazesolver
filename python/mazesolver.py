@@ -6,6 +6,7 @@ import copy
 import matplotlib.animation as animation
 import matplotlib.cm as cm
 
+from mazegenerator import *
 from utils import *
 
 
@@ -36,7 +37,7 @@ def depth_first_solve( M , ij_0 , ij_f ):
     maze_nodes.append( Node( ij_0[0] , ij_0[1] ) )
     
     first_move = find_possible_moves( ij_0[0] , ij_0[1] , M )
-    assert( len(first_move) == 1 )   # assuming entrance is not a split...
+    #assert( len(first_move) == 1 )   # assuming entrance is not a split...
     first_move = first_move[0]
     
     ij = first_move
@@ -119,30 +120,51 @@ def make_movie_of_maze_solve( M , IJ_all , entrance_ij , exit_ij , fig ):
         M_node[ exit_ij[0] , exit_ij[1] ] = 2
         frames.append( [ ax.imshow( M_node , vmin=0 , vmax=3 , cmap='afmhot') ] )
     
-    ani = animation.ArtistAnimation(fig, frames, interval=50, blit=True,
+    ani = animation.ArtistAnimation(fig, frames, interval=5, blit=True,
                                 repeat_delay=1000)
     ani.save('movie.mp4')
 
 
+def plot_soln( M , IJ , entrance_ij , exit_ij , fig ):
+    
+    ax = fig.gca()
+    
+    ax.set_xticks([])
+    ax.set_yticks([])
+    
+    frames = []
+    
+    M_node = M.copy()
+    
+    for ij_set in IJ:
+        for ij in ij_set:
+            M_node[ ij[0] , ij[1] ] = 2
+    
+    M_node[ exit_ij[0] , exit_ij[1] ] = 2
+    
+    ax.imshow( M_node , vmin=0 , vmax=3 , cmap='afmhot')
+    
+
 
 def main( M ):
     
-    exits = find_exit_points_of_maze( M )
-    assert( len(exits) == 2 ) # assume only 2 exit points of maze...
-    entrance_ij = exits[0]
-    exit_ij     = exits[1]
+    #exits = find_exit_points_of_maze( M )
+    #assert( len(exits) == 2 ) # assume only 2 exit points of maze...
+    #entrance_ij = exits[0]
+    #exit_ij     = exits[1]
+    
+    entrance_ij = [ M.shape[0]//2 , 0 ]
+    exit_ij     = [ M.shape[0]//2 , M.shape[1]-1 ]
     
     maze_nodes , IJ , IJ_all = depth_first_solve( M , entrance_ij , exit_ij )
     
-    print( 'COMPUTED NODAL PATH: ' )
-    for n in maze_nodes:
-        print( [n.i , n.j] )
-    print( exit_ij )
-    print('')
-        
     fig = plt.figure()
+    print( 'solved path length: ' + str(np.shape(IJ)[0]) )
+    print( 'iterations taken: '   + str(np.shape( IJ_all )) )
     
-    make_movie_of_maze_solve( -M+1 , IJ_all , entrance_ij , exit_ij , fig )
+    #make_movie_of_maze_solve( -M+1 , IJ_all , entrance_ij , exit_ij , fig )
+    
+    plot_soln( -M+1 , IJ , entrance_ij , exit_ij , fig )
     
     plt.show()
     
@@ -151,4 +173,9 @@ def main( M ):
     
 if __name__ == '__main__':
     
-    main( make_test_maze_loops() )
+    #main( make_test_maze_loops() )
+    
+    M = easy_random_maze_gen( 32 , 128 )
+    plt.imshow( -M+1 , vmin=0 , vmax=3 , cmap='afmhot' )
+    plt.show()
+    main( M )
