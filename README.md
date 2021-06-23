@@ -7,3 +7,5 @@ Implementation (in both Python and C++) of simple stack-based depth-first search
 https://user-images.githubusercontent.com/2964258/123000790-00effd00-d37e-11eb-8bb5-940972bb25c9.mp4
 
 https://user-images.githubusercontent.com/2964258/123022401-bda88500-d3a3-11eb-9cd8-1a4bde922a5f.mp4
+
+![maze256](https://user-images.githubusercontent.com/2964258/123022508-e6307f00-d3a3-11eb-9f08-f40602b80d2f.png)
