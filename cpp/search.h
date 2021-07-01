@@ -11,8 +11,8 @@ std::tuple< std::vector<Node> , std::vector<std::vector<std::vector<int>>> > dep
 			const std::vector<int>& ij_0 ,
 			const std::vector<int>& ij_f );
 
-void back_track( std::vector<Node>& stack_nodes ,
-		 std::vector<std::vector<std::vector<int>>>& list_IJ );
+std::vector<std::vector<int>> back_track_and_mark_dead_end_nodes( std::vector<Node>& stack_nodes ,
+								  std::vector<std::vector<std::vector<int>>>& list_IJ );
 
 
 

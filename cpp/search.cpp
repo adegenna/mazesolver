@@ -7,17 +7,41 @@
 using namespace std;
 using namespace Eigen;
 
-void back_track( vector<Node>& stack_nodes ,
-		 vector<vector<vector<int>>>& list_IJ ) {
+vector<vector<int>> back_track_and_mark_dead_end_nodes( vector<Node>& stack_nodes ,
+							vector<vector<vector<int>>>& list_IJ ) {
+  
+  vector<vector<int>> dead_end_IJ;
   
   stack_nodes[stack_nodes.size()-1].increment_next_index();
+  
+  if ( stack_nodes[stack_nodes.size()-1].get_next_index() >=
+       (stack_nodes[stack_nodes.size()-1].get_valid_next_moves()).size() ) {
+    dead_end_IJ.push_back( { stack_nodes[stack_nodes.size()-1].get_i() , 
+	  stack_nodes[stack_nodes.size()-1].get_j() } );
+  }
+  
   list_IJ.pop_back();
   list_IJ.resize( list_IJ.size()+1 );
   
   while( true ) {
     
-    if ( stack_nodes[stack_nodes.size()-1].get_next_index() >=
-	 (stack_nodes[stack_nodes.size()-1].get_valid_next_moves()).size() ) {
+    if ( stack_nodes.size() == 1 )
+      return { {-1,-1} };
+    
+    bool flag;
+    
+    if ( stack_nodes[stack_nodes.size()-1].get_valid_next_moves().empty() )
+      flag = true;
+    else {
+      flag = ( stack_nodes[stack_nodes.size()-1].get_next_index() >=
+	       ( stack_nodes[stack_nodes.size()-1].get_valid_next_moves() ).size() )
+	}
+    
+    if ( ( stack_nodes[stack_nodes.size()-1].get_next_index() >=
+	   (stack_nodes[stack_nodes.size()-1].get_valid_next_moves()).size() ) || flag ) {
+      
+      dead_end_IJ.push_back( { stack_nodes[stack_nodes.size()-1].get_i() , 
+	    stack_nodes[stack_nodes.size()-1].get_j() } );
       
       stack_nodes.pop_back();
       stack_nodes[stack_nodes.size()-1].increment_next_index();
@@ -32,6 +56,8 @@ void back_track( vector<Node>& stack_nodes ,
       break;
     
   }
+  
+  return dead_end_IJ;
   
 }
 
