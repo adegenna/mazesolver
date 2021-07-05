@@ -34,8 +34,8 @@ vector<vector<int>> back_track_and_mark_dead_end_nodes( vector<Node>& stack_node
       flag = true;
     else {
       flag = ( stack_nodes[stack_nodes.size()-1].get_next_index() >=
-	       ( stack_nodes[stack_nodes.size()-1].get_valid_next_moves() ).size() )
-	}
+	     ( stack_nodes[stack_nodes.size()-1].get_valid_next_moves() ).size() );
+    }
     
     if ( ( stack_nodes[stack_nodes.size()-1].get_next_index() >=
 	   (stack_nodes[stack_nodes.size()-1].get_valid_next_moves()).size() ) || flag ) {
@@ -69,6 +69,7 @@ tuple< vector<Node> , vector<vector<vector<int>>> > depth_first_solve(
   
   vector<Node> soln_nodes;
   vector<vector<vector<int>>> soln_IJ;
+  vector<vector<int>> dead_end_IJ;
   
   soln_nodes.clear();
   soln_nodes.push_back( Node( ij_0[0] , ij_0[1] ) );
@@ -92,9 +93,11 @@ tuple< vector<Node> , vector<vector<vector<int>>> > depth_first_solve(
       
       auto node_ij = get_all_node_ij( soln_nodes );
       
-      if( find( node_ij.begin() , node_ij.end() , ij ) != node_ij.end() ) { // you have been to this node before, so it's a loop...
+      if ( ( find( node_ij.begin() , node_ij.end() , ij ) != node_ij.end() ) ||
+	   ( find( dead_end_IJ.begin() , dead_end_IJ.end() , ij ) != dead_end_IJ.end() ) ) { // you have been to this node before, so it's a loop...
 	
-	back_track( soln_nodes , soln_IJ );
+	auto tmp = back_track_and_mark_dead_end_nodes( soln_nodes , soln_IJ );
+	dead_end_IJ.insert( dead_end_IJ.end(), tmp.begin(), tmp.end() );
 	
 	last_ij = { soln_nodes[soln_nodes.size()-1].get_i() ,
 	            soln_nodes[soln_nodes.size()-1].get_j() };
@@ -134,7 +137,8 @@ tuple< vector<Node> , vector<vector<vector<int>>> > depth_first_solve(
       
       else if ( moves.size() == 1 ) {    // dead end case...
 	
-	back_track( soln_nodes , soln_IJ );
+	auto tmp = back_track_and_mark_dead_end_nodes( soln_nodes , soln_IJ );
+	dead_end_IJ.insert( dead_end_IJ.end(), tmp.begin(), tmp.end() );
 	
 	last_ij = { soln_nodes[soln_nodes.size()-1].get_i() ,
 	            soln_nodes[soln_nodes.size()-1].get_j() };
