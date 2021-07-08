@@ -16,15 +16,13 @@ TEST_F( SearchTest , depth_first_search ) {
   
   vector<int> ij_0 = exits[0];
   vector<int> ij_f = exits[1];
-    \
+    
   auto dfs = DepthFirstSearch( M , ij_0 , ij_f );
-  const auto& soln_nodes = dfs.getSolutionNodes();
-  const auto& soln_IJ = dfs.getSolutionIJ();
 
   vector<vector<int>> soln_nodes_ij;
   
-  for ( int i=0; i<soln_nodes.size(); i++ )
-    soln_nodes_ij.push_back( { soln_nodes[i].get_i() , soln_nodes[i].get_j() } );
+  for ( int i=0; i<dfs.solutionLength(); i++ )
+    soln_nodes_ij.push_back( { dfs.getSolutionNode(i).get_i() , dfs.getSolutionNode(i).get_j() } );
   
   ASSERT_TRUE( soln_nodes_ij.size() == correct_nodes_.size() );
   
