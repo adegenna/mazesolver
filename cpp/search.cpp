@@ -64,12 +64,8 @@ DepthFirstSearch::back_track_and_mark_dead_end_nodes(vector<Node> &stack_nodes,
 }
 
 tuple<vector<Node>, vector<vector<vector<int>>>>
-DepthFirstSearch::depth_first_solve(
-    const MatrixXi &M,
-    const vector<int> &ij_0,
-    const vector<int> &ij_f) const
+DepthFirstSearch::depth_first_solve() const
 {
-
   vector<Node> soln_nodes;
   vector<vector<vector<int>>> soln_IJ;
   vector<vector<int>> dead_end_IJ;

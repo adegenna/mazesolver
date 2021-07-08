@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
   cout << ij_f[0] << "," << ij_f[1];
   cout << ")" << endl;
   
-  auto [ soln_nodes , soln_IJ ]  = DepthFirstSearch().depth_first_solve( M , ij_0 , ij_f );
+  auto [ soln_nodes , soln_IJ ]  = DepthFirstSearch( M , ij_0 , ij_f ).depth_first_solve();
     
   ofstream outfile_ij( "soln_ij.csv" );
   for ( int i=0; i<soln_IJ.size(); i++ ) {
