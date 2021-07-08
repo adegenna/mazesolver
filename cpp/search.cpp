@@ -3,6 +3,7 @@
 #include "Node.h"
 #include <iostream>
 #include <algorithm>
+#include <fstream>
 
 using namespace std;
 using namespace Eigen;
@@ -174,4 +175,21 @@ DepthFirstSearch::depth_first_solve() const
   }
 
   return make_tuple(soln_nodes, soln_IJ);
+}
+
+void DepthFirstSearch::writeSolutionToCSV(const std::string &filename) const
+{
+
+  auto [soln_nodes, soln_IJ] = this->depth_first_solve();
+
+  ofstream outfile_ij(filename);
+  for (int i = 0; i < soln_IJ.size(); i++)
+  {
+    for (int j = 0; j < soln_IJ[i].size(); j++)
+    {
+      outfile_ij << soln_IJ[i][j][0] << "," << soln_IJ[i][j][1] << endl;
+    }
+  }
+  outfile_ij << ij_f[0] << "," << ij_f[1];
+  outfile_ij.close();
 }

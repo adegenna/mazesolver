@@ -18,6 +18,8 @@ public:
 
 	std::tuple<std::vector<Node>, std::vector<std::vector<std::vector<int>>>> depth_first_solve() const;
 
+	void writeSolutionToCSV(const std::string& filename) const;
+
 private:
 	const Eigen::MatrixXi &M;
 	const std::vector<int> &ij_0;
