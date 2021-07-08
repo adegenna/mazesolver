@@ -64,11 +64,9 @@ DepthFirstSearch::back_track_and_mark_dead_end_nodes(vector<Node> &stack_nodes,
   return dead_end_IJ;
 }
 
-tuple<vector<Node>, vector<vector<vector<int>>>>
-DepthFirstSearch::depth_first_solve() const
+
+void DepthFirstSearch::depth_first_solve(std::vector<Node>& soln_nodes, std::vector<std::vector<std::vector<int>>>& soln_IJ)
 {
-  vector<Node> soln_nodes;
-  vector<vector<vector<int>>> soln_IJ;
   vector<vector<int>> dead_end_IJ;
 
   soln_nodes.clear();
@@ -173,15 +171,10 @@ DepthFirstSearch::depth_first_solve() const
       }
     }
   }
-
-  return make_tuple(soln_nodes, soln_IJ);
 }
 
 void DepthFirstSearch::writeSolutionToCSV(const std::string &filename) const
 {
-
-  auto [soln_nodes, soln_IJ] = this->depth_first_solve();
-
   ofstream outfile_ij(filename);
   for (int i = 0; i < soln_IJ.size(); i++)
   {

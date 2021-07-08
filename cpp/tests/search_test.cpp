@@ -16,8 +16,10 @@ TEST_F( SearchTest , depth_first_search ) {
   
   vector<int> ij_0 = exits[0];
   vector<int> ij_f = exits[1];
-    
-  auto [ soln_nodes , soln_IJ ] = DepthFirstSearch( M , ij_0 , ij_f ).depth_first_solve();
+    \
+  auto dfs = DepthFirstSearch( M , ij_0 , ij_f );
+  const auto& soln_nodes = dfs.getSolutionNodes();
+  const auto& soln_IJ = dfs.getSolutionIJ();
 
   vector<vector<int>> soln_nodes_ij;
   
