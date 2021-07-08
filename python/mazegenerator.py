@@ -24,8 +24,9 @@ def easy_random_maze_gen( n , m ):
             M[ i0 , j0 ] = 0
     
     M = -M + 1
+    for i in range( m*n//12 ):
+        M[ np.random.choice( np.arange(n) ) , np.random.choice( np.arange(m) ) ] = 1
     M[0] = 0; M[-1] = 0; M[:,0] = 0; M[:,-1] = 0
-    #M[0,0] = 1; M[-1,0] = 1; M[0,-1] = 1; M[-1,-1] = 1
     M[0] = 1; M[-1] = 1
     
     Mpad = np.ones( [ n+2 , m+2 ] )

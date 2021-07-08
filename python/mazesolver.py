@@ -23,8 +23,16 @@ def backtrack_and_mark_dead_end_nodes( stack_nodes , list_IJ ):
     list_IJ.append([])
     
     while(True):
-        
-        if ( stack_nodes[-1].nxt_index >= len(stack_nodes[-1].valid_nxt_moves) ):
+
+        if ( len( stack_nodes ) == 1 ):
+            return [ False , False , False ]
+
+        if ( stack_nodes[-1].valid_nxt_moves is None ):
+            flag = True
+        else:
+            flag = ( stack_nodes[-1].nxt_index >= len(stack_nodes[-1].valid_nxt_moves) )
+                
+        if ( ( stack_nodes[-1].valid_nxt_moves is None ) | flag ):
             
             dead_end_IJ.append( [ stack_nodes[-1].i , stack_nodes[-1].j ] )
             
@@ -82,7 +90,7 @@ def depth_first_solve( M , ij_0 , ij_f ):
     while( np.all(ij != ij_f) ):
         
         IJ[-1].append(ij)
-        IJ_all.append( copy.deepcopy( IJ ) )
+        #IJ_all.append( copy.deepcopy( IJ ) )
                 
         if ( check_if_i0j0_is_maze_node( M , ij[0] , ij[1] , last_ij ) == True ):
 
@@ -99,6 +107,11 @@ def depth_first_solve( M , ij_0 , ij_f ):
                 
                 #maze_nodes , IJ = backtrack( maze_nodes , IJ )
                 maze_nodes , IJ , dead_end_tmp = backtrack_and_mark_dead_end_nodes( maze_nodes , IJ )
+                
+                if maze_nodes is False:
+                    print( 'no soln found' )
+                    return [ False , False , False ]
+                
                 dead_end_IJ += dead_end_tmp
                 
                 last_ij = [ maze_nodes[-1].i , maze_nodes[-1].j ]
@@ -118,6 +131,11 @@ def depth_first_solve( M , ij_0 , ij_f ):
                 
                 #maze_nodes , IJ = backtrack( maze_nodes , IJ )
                 maze_nodes , IJ , dead_end_tmp = backtrack_and_mark_dead_end_nodes( maze_nodes , IJ )
+                
+                if maze_nodes is False:
+                    print( 'no soln found' )
+                    return [ False , False , False ]
+                
                 dead_end_IJ += dead_end_tmp
                 
                 last_ij = [ maze_nodes[-1].i , maze_nodes[-1].j ]
@@ -154,7 +172,7 @@ def make_movie_of_maze_solve( M , IJ_all , entrance_ij , exit_ij , fig ):
         M_node[ exit_ij[0] , exit_ij[1] ] = 2
         frames.append( [ ax.imshow( M_node , vmin=0 , vmax=3 , cmap='afmhot') ] )
     
-    ani = animation.ArtistAnimation(fig, frames, interval=50, blit=True,
+    ani = animation.ArtistAnimation(fig, frames, interval=5, blit=True,
                                 repeat_delay=1000)
     ani.save('movie.mp4')
 
@@ -182,23 +200,26 @@ def plot_soln( M , IJ , entrance_ij , exit_ij , fig ):
 
 def main( M ):
     
-    exits = find_exit_points_of_maze( M )
-    assert( len(exits) == 2 ) # assume only 2 exit points of maze...
-    entrance_ij = exits[0]
-    exit_ij     = exits[1]
+    #exits = find_exit_points_of_maze( M )
+    #assert( len(exits) == 2 ) # assume only 2 exit points of maze...
+    #entrance_ij = exits[0]
+    #exit_ij     = exits[1]
     
-    #entrance_ij = [ M.shape[0]//2 , 0 ]
-    #exit_ij     = [ M.shape[0]//2 , M.shape[1]-1 ]
+    entrance_ij = [ M.shape[0]//2 , 0 ]
+    exit_ij     = [ M.shape[0]//2 , M.shape[1]-1 ]
     
     maze_nodes , IJ , IJ_all = depth_first_solve( M , entrance_ij , exit_ij )
+
+    if (maze_nodes is False):
+        return
     
-    fig = plt.figure()
+    fig = plt.figure( figsize=(7,2) )
     print( 'solved path length: ' + str( np.sum( [ len(IJ[i]) for i in range(len(IJ)) ] ) ) )
-    print( 'iterations taken: '   + str(np.shape( IJ_all )) )
+    print( 'iterations taken: '   + str( len( IJ_all )) )
     
-    make_movie_of_maze_solve( -M+1 , IJ_all , entrance_ij , exit_ij , fig )
+    #make_movie_of_maze_solve( -M+1 , IJ_all , entrance_ij , exit_ij , fig )
     
-    #plot_soln( -M+1 , IJ , entrance_ij , exit_ij , fig )
+    plot_soln( -M+1 , IJ , entrance_ij , exit_ij , fig )
     
     plt.show()
     
@@ -207,9 +228,7 @@ def main( M ):
     
 if __name__ == '__main__':
     
-    main( make_test_maze_loops() )
+    #main( make_test_maze_loops() )
     
-    #M = easy_random_maze_gen( 32,128 )
-    #plt.imshow( -M+1 , vmin=0 , vmax=3 , cmap='afmhot' )
-    #plt.show()
-    #main( M )
+    M = easy_random_maze_gen( 512,512 )
+    main( M )

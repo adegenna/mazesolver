@@ -1,5 +1,6 @@
 #include "Node.h"
 #include "utils.h"
+#include <iostream>
 
 using namespace std;
 using namespace Eigen;
@@ -52,10 +53,10 @@ vector< vector<int> > get_all_node_ij( const vector<Node>& stack_nodes ) {
   
   for ( auto ni : stack_nodes ) {
     
-    IJ.push_back( vector<int>( ni.get_i() , ni.get_j() ) );
+    IJ.push_back( { ni.get_i() , ni.get_j() } );
     
   }
-  
+    
   return IJ;
   
 }

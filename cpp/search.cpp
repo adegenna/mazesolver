@@ -17,7 +17,7 @@ vector<vector<int>> back_track_and_mark_dead_end_nodes( vector<Node>& stack_node
   if ( stack_nodes[stack_nodes.size()-1].get_next_index() >=
        (stack_nodes[stack_nodes.size()-1].get_valid_next_moves()).size() ) {
     dead_end_IJ.push_back( { stack_nodes[stack_nodes.size()-1].get_i() , 
-	  stack_nodes[stack_nodes.size()-1].get_j() } );
+	                     stack_nodes[stack_nodes.size()-1].get_j() } );
   }
   
   list_IJ.pop_back();
@@ -37,11 +37,10 @@ vector<vector<int>> back_track_and_mark_dead_end_nodes( vector<Node>& stack_node
 	     ( stack_nodes[stack_nodes.size()-1].get_valid_next_moves() ).size() );
     }
     
-    if ( ( stack_nodes[stack_nodes.size()-1].get_next_index() >=
-	   (stack_nodes[stack_nodes.size()-1].get_valid_next_moves()).size() ) || flag ) {
+    if ( ( stack_nodes[stack_nodes.size()-1].get_valid_next_moves().empty() ) || flag ) {
       
-      dead_end_IJ.push_back( { stack_nodes[stack_nodes.size()-1].get_i() , 
-	    stack_nodes[stack_nodes.size()-1].get_j() } );
+      dead_end_IJ.push_back( {stack_nodes[stack_nodes.size()-1].get_i() , 
+	                      stack_nodes[stack_nodes.size()-1].get_j() } );
       
       stack_nodes.pop_back();
       stack_nodes[stack_nodes.size()-1].increment_next_index();
@@ -56,7 +55,7 @@ vector<vector<int>> back_track_and_mark_dead_end_nodes( vector<Node>& stack_node
       break;
     
   }
-  
+    
   return dead_end_IJ;
   
 }
@@ -84,6 +83,8 @@ tuple< vector<Node> , vector<vector<vector<int>>> > depth_first_solve(
   soln_IJ.resize(1);
   soln_IJ[0].push_back( last_ij );
   soln_IJ.resize( soln_IJ.size() + 1 );
+
+  vector<vector<int>> no_soln = { { -1 , -1 } }; // returned by backtracking if no soln
   
   while ( ij != ij_f ) {
     
@@ -97,6 +98,12 @@ tuple< vector<Node> , vector<vector<vector<int>>> > depth_first_solve(
 	   ( find( dead_end_IJ.begin() , dead_end_IJ.end() , ij ) != dead_end_IJ.end() ) ) { // you have been to this node before, so it's a loop...
 	
 	auto tmp = back_track_and_mark_dead_end_nodes( soln_nodes , soln_IJ );
+	
+	if ( tmp == no_soln ) {
+	  cout << "no soln found" << endl;
+	  break;
+	}
+	
 	dead_end_IJ.insert( dead_end_IJ.end(), tmp.begin(), tmp.end() );
 	
 	last_ij = { soln_nodes[soln_nodes.size()-1].get_i() ,
@@ -138,6 +145,12 @@ tuple< vector<Node> , vector<vector<vector<int>>> > depth_first_solve(
       else if ( moves.size() == 1 ) {    // dead end case...
 	
 	auto tmp = back_track_and_mark_dead_end_nodes( soln_nodes , soln_IJ );
+	
+	if ( tmp == no_soln ) {
+	  cout << "no soln found" << endl;
+	  break;
+	}
+	
 	dead_end_IJ.insert( dead_end_IJ.end(), tmp.begin(), tmp.end() );
 	
 	last_ij = { soln_nodes[soln_nodes.size()-1].get_i() ,

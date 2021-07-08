@@ -14,6 +14,8 @@ bool check_if_ij_is_maze_node( const Eigen::MatrixXi& M ,
 			       const int i , const int j ,
 			       const std::vector<int> last_ij );
 
+void print_vector_vector_int( const std::vector<std::vector<int>>& list_IJ );
+
 
 
 #endif

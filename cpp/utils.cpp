@@ -99,3 +99,14 @@ bool check_if_ij_is_maze_node( const MatrixXi& M ,
 }
 
 
+void print_vector_vector_int( const vector<vector<int>>& list_IJ ) {
+  
+  for ( int i=0; i<list_IJ.size(); i++ ) {
+    for ( int j=0; j<list_IJ[i].size(); j++ ) {
+      cout << list_IJ[i][j] << ",";
+    }
+    cout << endl;
+  }
+  cout << endl;
+
+}
