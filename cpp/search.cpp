@@ -8,9 +8,18 @@
 using namespace std;
 using namespace Eigen;
 
+	DepthFirstSearch::DepthFirstSearch(const Eigen::MatrixXi &M_in,
+					 const std::vector<int> &ij_0_in,
+					 const std::vector<int> &ij_f_in)
+           : ij_f(ij_f_in)
+	{
+    depth_first_solve(M_in, ij_0_in, ij_f_in, soln_nodes, soln_IJ);
+	}
+
+
 vector<vector<int>>
 DepthFirstSearch::back_track_and_mark_dead_end_nodes(vector<Node> &stack_nodes,
-                                                     vector<vector<vector<int>>> &list_IJ) const
+                                                     vector<vector<vector<int>>> &list_IJ)
 {
 
   vector<vector<int>> dead_end_IJ;
@@ -64,8 +73,12 @@ DepthFirstSearch::back_track_and_mark_dead_end_nodes(vector<Node> &stack_nodes,
   return dead_end_IJ;
 }
 
-
-void DepthFirstSearch::depth_first_solve(std::vector<Node>& soln_nodes, std::vector<std::vector<std::vector<int>>>& soln_IJ)
+void DepthFirstSearch::depth_first_solve(
+    const Eigen::MatrixXi &M,
+    const std::vector<int> &ij_0,
+    const std::vector<int> &ij_f, 
+    std::vector<Node> &soln_nodes,
+    std::vector<std::vector<std::vector<int>>> &soln_IJ)
 {
   vector<vector<int>> dead_end_IJ;
 

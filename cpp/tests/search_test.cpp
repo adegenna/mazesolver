@@ -18,10 +18,10 @@ TEST_F( SearchTest , depth_first_search ) {
   vector<int> ij_f = exits[1];
     
   auto dfs = DepthFirstSearch( M , ij_0 , ij_f );
-  ASSERT_TRUE( dfs.solutionLength() == correct_nodes_.size() );
-
   auto& soln_nodes_ij = dfs.getSolutionNodes();
   
+  ASSERT_TRUE( soln_nodes_ij.size() == correct_nodes_.size() );
+
   for ( auto vi : correct_nodes_ )
     ASSERT_TRUE( find( soln_nodes_ij.begin() , soln_nodes_ij.end() , vi ) != soln_nodes_ij.end() );
 }
