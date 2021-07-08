@@ -19,8 +19,9 @@ public:
 
 	void writeSolutionToCSV(const std::string &filename) const;
 	
-	int solutionLength() const { return soln_nodes.size(); }
-	const Node& getSolutionNode(int i) const { return soln_nodes[i]; }
+	const std::vector<Node>& getSolutionNodes() const { return soln_nodes; }
+	int solutionLength() const { return getSolutionNodes().size(); }
+	const Node& getSolutionNode(int i) const { return getSolutionNodes()[i]; }
 
 private:
 	const Eigen::MatrixXi &M;

@@ -3,6 +3,7 @@
 
 #include "gtest/gtest.h"
 #include "math.h"
+#include "../Node.h"
 #include <Eigen/Dense>
 
 class SearchTest: public ::testing::Test {
@@ -32,7 +33,8 @@ class SearchTest: public ::testing::Test {
     
   }
   
-  std::vector<std::vector<int>> correct_nodes_;
+  // std::vector<std::vector<int>> correct_nodes_;
+  std::vector<Node> correct_nodes_;
     
 };
 

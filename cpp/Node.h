@@ -28,6 +28,11 @@ class Node {
   
 };
 
+inline bool operator==(const Node& lhs, const Node& rhs)
+{
+    return (lhs.get_i()==rhs.get_i()) && (lhs.get_j()==rhs.get_j());
+}
+
 std::vector< std::vector<int> > get_all_node_ij( const std::vector<Node>& stack_nodes );
 
 
