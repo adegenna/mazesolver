@@ -10,14 +10,19 @@ class DepthFirstSearch
 {
 public:
 	DepthFirstSearch(const Eigen::MatrixXi &M_in,
-					 const std::vector<int> &ij_0_in,
-					 const std::vector<int> &ij_f_in);
+					 const Node &ij_0_in,
+					 const Node &ij_f_in);
 
 	void writeSolutionToCSV(const std::string &filename) const;
 	
 	const std::vector<Node>& getSolutionNodes() const { return soln_nodes; }
 
 private:
+    DepthFirstSearch(const Eigen::MatrixXi &M_in,
+                     const std::vector<int> &ij_0_in,
+                     const std::vector<int> &ij_f_in);
+
+
 	const std::vector<int> ij_f;
 
 	std::vector<Node> soln_nodes;

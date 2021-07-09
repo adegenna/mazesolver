@@ -17,9 +17,11 @@ TEST_F( SearchTest , depth_first_search ) {
   vector<int> ij_0 = exits[0];
   vector<int> ij_f = exits[1];
     
-  auto dfs = DepthFirstSearch( M , ij_0 , ij_f );
-  auto& soln_nodes_ij = dfs.getSolutionNodes();
+  // auto dfs = DepthFirstSearch( M , ij_0 , ij_f );
+  // auto& soln_nodes_ij = dfs.getSolutionNodes();
   
+  auto soln_nodes_ij = DepthFirstSearch( M , ij_0 , ij_f ).getSolutionNodes();
+
   ASSERT_TRUE( soln_nodes_ij.size() == correct_nodes_.size() );
 
   for ( auto vi : correct_nodes_ )
