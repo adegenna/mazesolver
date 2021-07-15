@@ -39,6 +39,8 @@ int main(int argc, char* argv[]) {
   
 
   DepthFirstSearch( M , ij_0 , ij_f ).writeSolutionToCSV("soln_ij.csv");
+
+  writeMazeToCSV( "maze.csv" , M );
   
   return 0;
 }

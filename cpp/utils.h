@@ -16,6 +16,7 @@ bool check_if_ij_is_maze_node( const Eigen::MatrixXi& M ,
 
 void print_vector_vector_int( const std::vector<std::vector<int>>& list_IJ );
 
+void writeMazeToCSV( const std::string &filename , const Eigen::MatrixXi& M );
 
 
 #endif

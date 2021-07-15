@@ -1,5 +1,6 @@
 #include "utils.h"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 using namespace Eigen;
@@ -109,4 +110,16 @@ void print_vector_vector_int( const vector<vector<int>>& list_IJ ) {
   }
   cout << endl;
 
+}
+
+void writeMazeToCSV( const std::string &filename , const Eigen::MatrixXi& M ) {
+  
+  ofstream outfile(filename);
+  
+  const static Eigen::IOFormat CSVFormat(Eigen::StreamPrecision, Eigen::DontAlignCols, ", ", "\n");
+  
+  outfile << M.format(CSVFormat);
+  
+  outfile.close();
+  
 }
