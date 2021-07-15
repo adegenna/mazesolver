@@ -20,7 +20,7 @@ TEST_F( SearchTest , depth_first_search ) {
   // auto dfs = DepthFirstSearch( M , ij_0 , ij_f );
   // auto& soln_nodes_ij = dfs.getSolutionNodes();
   
-  auto soln_nodes_ij = DepthFirstSearch( M , ij_0 , ij_f ).getSolutionNodes();
+  auto soln_nodes_ij = DepthFirstSearch( M , Node( ij_0[0] , ij_0[1] ) , Node( ij_f[0] , ij_f[1] ) ).getSolutionNodes();
 
   ASSERT_TRUE( soln_nodes_ij.size() == correct_nodes_.size() );
 
