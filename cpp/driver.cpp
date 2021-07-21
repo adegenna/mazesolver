@@ -18,9 +18,18 @@ using namespace Eigen;
 int main(int argc, char* argv[]) {
   
   cout << "*********** DRIVER PROGRAM FOR MAZE SOLVER ***********\n\n";
+
+  MatrixXi M;
   
-  MatrixXi M = make_maze_32x32_with_loops();
+  if ( argc == 1 )
+    M = make_maze_32x32_with_loops();
   
+  else {
+    string filepath( argv[1] );
+    cout << "using maze in: " << filepath << endl;
+    M = load_csv<MatrixXi>( filepath );
+  }
+    
   vector<vector<int>> exits = find_exit_points_of_maze( M );
 
   const Node ij_0(exits[0][0], exits[0][1]);

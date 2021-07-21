@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <Eigen/Dense>
+#include <fstream>
 
 std::vector< std::vector<int> > find_possible_moves( const int i ,
 						     const int j ,
@@ -18,5 +19,30 @@ void print_vector_vector_int( const std::vector<std::vector<int>>& list_IJ );
 
 void writeMazeToCSV( const std::string &filename , const Eigen::MatrixXi& M );
 
+template<typename M>
+M load_csv( const std::string& path ) {
+  
+  std::ifstream indata;
+  indata.open(path);
+  std::string line;
+  std::vector<int> values;
+  uint rows = 0;
+  
+  while (std::getline(indata, line)) {
+    
+    std::stringstream lineStream(line);
+    std::string cell;
+    
+    while (std::getline(lineStream, cell, ',')) {
+      values.push_back(std::stod(cell));
+    }
+    
+    ++rows;
+    
+  }
+  
+  return Eigen::Map<const Eigen::Matrix<typename M::Scalar, M::RowsAtCompileTime, M::ColsAtCompileTime, Eigen::RowMajor>>(values.data(), rows, values.size()/rows);
+
+}
 
 #endif
