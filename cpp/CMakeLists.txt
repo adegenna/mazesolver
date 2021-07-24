@@ -29,6 +29,7 @@ add_executable( mazesolver
   Node.cpp
   utils.cpp
   search.cpp
+  path.cpp
   examplemaze.cpp
   )
 
@@ -45,6 +46,7 @@ add_executable( unittests
   search.cpp
   examplemaze.cpp
   utils.cpp
+  path.cpp
   Node.cpp
 )
 
